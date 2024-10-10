@@ -1,6 +1,35 @@
 body {
-    padding: 16px;
-    font-family: "Inter", sans-serif;
-    color: #1B1C1E;
+  padding: 16px;
+  font-family: "Inter", sans-serif;
+  color: #1b1c1e;
 }
 
+.header {
+  display: flex;
+  flex-direction: row;
+  font-size: 12px;
+  gap: 12px;
+}
+
+h1 {
+  font-weight: 600;
+}
+
+.search-bar {
+  padding: 6px 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #eeeff0;
+  border-radius: 12px;
+  gap: 8px;
+}
+
+.search-bar-input {
+  border: none;
+  background-color: inherit;
+  color: #5b5c5e;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 160%;
+}
