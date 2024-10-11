@@ -1,8 +1,11 @@
-const addFirstNoteButton = document.getElementById("no-notes-button");
+const noNotesSection = document.getElementById("no-notes-section");
+const addNoteButtons = document.getElementsByName("add-note-button");
+const addNextNoteButton = document.getElementById("add-next-note-button");
 const editNoteForm = document.getElementById("edit-note-form");
 const editNoteTitle = document.getElementById("edit-note-title");
 const editNoteDetails = document.getElementById("edit-note-details");
 const editNoteCancel = document.getElementById("edit-note-cancel");
+const editNoteMenuLabel = document.getElementById("edit-note-menu-label");
 const notes = document.getElementById("notes");
 
 const notesData = [];
@@ -12,11 +15,22 @@ const toggleNoteMenu = (_, note) => {
   const isOpeningMenu = editNoteForm.style.display !== "flex";
 
   if (isOpeningMenu) {
+    noNotesSection.style.display = "none";
+    addNextNoteButton.style.display = "none";
+    editNoteMenuLabel.textContent = "Add new note";
+
     if (note) {
+      editNoteMenuLabel.textContent = "Edit note";
       editedNote = note;
       updateNoteForm(note);
     }
   } else {
+    if (notesData.length) {
+      addNextNoteButton.style.display = "flex";
+    } else {
+      noNotesSection.style.display = "flex";
+    }
+
     editedNote = null;
     updateNoteForm({ title: "", details: "" });
   }
@@ -101,9 +115,17 @@ const removeNote = (noteId) => {
   );
 
   notesData.splice(noteIdx, 1);
+
+  if (!notesData.length) {
+    noNotesSection.style.display = "flex";
+    addNextNoteButton.style.display = "none";
+  }
+
   updateNotesView();
 };
 
-addFirstNoteButton.addEventListener("click", toggleNoteMenu);
+addNoteButtons.forEach((button) =>
+  button.addEventListener("click", toggleNoteMenu)
+);
 editNoteCancel.addEventListener("click", toggleNoteMenu);
 editNoteForm.addEventListener("submit", updateNote);

@@ -21,18 +21,19 @@
       <img src="icons/search-glass.svg" alt="Search glass" width="24" height="24" />
       <input type="text" placeholder="Search notes...">
     </div>
-    <section class="no-notes">
+    <section class="no-notes" id="no-notes-section">
       <img src="icons/info.svg" alt="I letter in black circle" width="60" height="60" />
       <p class="no-notes-title">No notes yet</p>
       <p class="no-notes-text">Add a note to keep track of your learnings.</p>
-      <button id="no-notes-button">
+      <button name="add-note-button">
         <img src="icons/add-note.svg" alt="Folded paper with plus sign" width="24" height="24" />
         <p>Add Note</p>
       </button>
     </section>
+    <button class="button-purple add-next-note-button" id="add-next-note-button" name="add-note-button">Add New</button>
     <form class="edit-note" id="edit-note-form">
       <div class="edit-note-header">
-        <p class="edit-note-title">Add new note</p>
+        <p class="edit-note-title" id="edit-note-menu-label">Add new note</p>
         <button class="edit-note-cancel" id="edit-note-cancel" type="button">Cancel</button>
       </div>
       <input class="edit-note-input" id="edit-note-title" type="text" placeholder="Note title" name="title">
