@@ -24,21 +24,26 @@ addNote = (event) => {
 
 const createNoteElement = ({ title, details, date }) => {
   const noteListElement = document.createElement("li");
+  noteListElement.className = "notes-note";
+
   const month = date.toLocaleString("default", { month: "long" });
   const day = date.getDate();
 
   const noteContent = `
-    <li class="notes-note">
-        <div class="notes-note-data">
-        <span class="notes-note=title">${title}</span>
-        <span class="notes-note=details">${details}</span>
-        <span class="notes-note=date">${month} ${day}</span>
+        <div class="notes-note-header">
+            <span class="notes-note-title">${title}</span>
+            <div class="notes-note-buttons">
+                <button class="notes-note-button">
+                    <img src="icons/edit.svg" alt="Edit note - Three lines with pencil" width="20" height="20" />
+                </button>
+                <button class="notes-note-button">
+                    <img src="icons/trash-bin.svg" alt="Remove note - Trash bin" width="20" height="20" />
+                </button>
+            </div>
         </div>
-        <div class=notes-note-buttons>
-            <button></button>
-            <button></button>
-        </div>
-    </li>`;
+        <span class="notes-note-details">${details}</span>
+        <span class="notes-note-date">${month} ${day}</span>
+        `;
 
   noteListElement.innerHTML = noteContent;
   notes.appendChild(noteListElement);
