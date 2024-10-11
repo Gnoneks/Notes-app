@@ -7,9 +7,14 @@ const editNoteDetails = document.getElementById("edit-note-details");
 const editNoteCancel = document.getElementById("edit-note-cancel");
 const editNoteMenuLabel = document.getElementById("edit-note-menu-label");
 const notes = document.getElementById("notes");
+const dialog = document.getElementById("dialog");
+const dialogCloseButton = document.getElementById("dialog-close");
+const dialogConfirm = document.getElementById("dialog-confirm");
 
 const notesData = [];
+
 let editedNote = null;
+let removedNoteId = null;
 
 const toggleNoteMenu = (_, note) => {
   const isOpeningMenu = editNoteForm.style.display !== "flex";
@@ -73,7 +78,7 @@ const updateNotesView = () => {
 
     const removeButton = noteListElement.querySelector("[name='remove-note']");
     removeButton.addEventListener("click", function () {
-      removeNote(note.id);
+      openRemoveDialog(note.id);
     });
 
     notes.appendChild(noteListElement);
@@ -109,9 +114,15 @@ const updateNote = (event) => {
   toggleNoteMenu();
 };
 
-const removeNote = (noteId) => {
+const openRemoveDialog = (noteId) => {
+  removedNoteId = noteId;
+
+  dialog.showModal();
+};
+
+const removeNote = () => {
   const noteIdx = notesData.findIndex(
-    ({ id }) => id.toString() === noteId.toString()
+    ({ id }) => id.toString() === removedNoteId.toString()
   );
 
   notesData.splice(noteIdx, 1);
@@ -121,6 +132,8 @@ const removeNote = (noteId) => {
     addNextNoteButton.style.display = "none";
   }
 
+  removedNoteId = null;
+  dialog.close();
   updateNotesView();
 };
 
@@ -129,3 +142,7 @@ addNoteButtons.forEach((button) =>
 );
 editNoteCancel.addEventListener("click", toggleNoteMenu);
 editNoteForm.addEventListener("submit", updateNote);
+dialogCloseButton.addEventListener("click", function () {
+  dialog.close();
+});
+dialogConfirm.addEventListener("click", removeNote);
