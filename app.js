@@ -9,7 +9,7 @@ const notesData = [];
 let editedNote = null;
 
 const toggleNoteMenu = (_, note) => {
-  const isOpeningMenu = editNoteForm.style.display === "none";
+  const isOpeningMenu = editNoteForm.style.display !== "flex";
 
   if (isOpeningMenu) {
     if (note) {
@@ -57,7 +57,10 @@ const updateNotesView = () => {
       toggleNoteMenu(null, note);
     });
 
-    const removeButton = noteListElement.querySelector("[name='edit-note']");
+    const removeButton = noteListElement.querySelector("[name='remove-note']");
+    removeButton.addEventListener("click", function () {
+      removeNote(note.id);
+    });
 
     notes.appendChild(noteListElement);
   });
@@ -90,6 +93,15 @@ const updateNote = (event) => {
 
   updateNotesView();
   toggleNoteMenu();
+};
+
+const removeNote = (noteId) => {
+  const noteIdx = notesData.findIndex(
+    ({ id }) => id.toString() === noteId.toString()
+  );
+
+  notesData.splice(noteIdx, 1);
+  updateNotesView();
 };
 
 addFirstNoteButton.addEventListener("click", toggleNoteMenu);
