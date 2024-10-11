@@ -1,6 +1,7 @@
 const addFirstNoteButton = document.getElementById("no-notes-button");
 const addNewNoteForm = document.getElementById("add-new-note-form");
 const addNewNoteCancelButton = document.getElementById("add-new-note-cancel");
+const notes = document.getElementById("notes");
 
 toggleAddNoteMenu = () => {
   const isMenuVisible = addNewNoteForm.style.display === "flex";
@@ -13,9 +14,31 @@ addNote = (event) => {
 
   const formData = new FormData(event.target);
   const formValues = Object.fromEntries(formData);
+  formValues.date = new Date();
   formValues.id = Math.floor(Math.random() * 1000000000);
+  console.log("Note: ", formValues);
 
+  createNoteElement(formValues);
   toggleAddNoteMenu();
+};
+
+const createNoteElement = (noteData) => {
+  const noteListElement = document.createElement("li");
+  const noteContent = `
+    <li class="notes-note">
+        <div class="notes-note-data">
+        <span class="notes-note=title">${noteData.title}</span>
+        <span class="notes-note=details">${noteData.details}</span>
+        <span class="notes-note=date">${noteData.date}</span>
+        </div>
+        <div class=notes-note-buttons>
+            <button></button>
+            <button></button>
+        </div>
+    </li>`;
+
+  noteListElement.innerHTML = noteContent;
+  notes.appendChild(noteListElement);
 };
 
 addFirstNoteButton.addEventListener("click", toggleAddNoteMenu);
