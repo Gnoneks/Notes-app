@@ -1,0 +1,13 @@
+:root {
+  --text-dark: #1b1c1e;
+  --text-light-grey: #5b5c5e;
+  --text-grey: #3b3c3e;
+  --grey: #bdbdbd;
+  --border-grey: #bcbcbd;
+  --background-light: #eeeff0;
+  --hover-light: #e7e7e7;
+  --hover-grey: #dcdee0;
+  --light-purple: #844dba;
+  --purple: #6b3c9b;
+  --dark-purple: #5b2f87;
+}
