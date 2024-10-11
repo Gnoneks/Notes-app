@@ -22,14 +22,17 @@ addNote = (event) => {
   toggleAddNoteMenu();
 };
 
-const createNoteElement = (noteData) => {
+const createNoteElement = ({ title, details, date }) => {
   const noteListElement = document.createElement("li");
+  const month = date.toLocaleString("default", { month: "long" });
+  const day = date.getDate();
+
   const noteContent = `
     <li class="notes-note">
         <div class="notes-note-data">
-        <span class="notes-note=title">${noteData.title}</span>
-        <span class="notes-note=details">${noteData.details}</span>
-        <span class="notes-note=date">${noteData.date}</span>
+        <span class="notes-note=title">${title}</span>
+        <span class="notes-note=details">${details}</span>
+        <span class="notes-note=date">${month} ${day}</span>
         </div>
         <div class=notes-note-buttons>
             <button></button>
