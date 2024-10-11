@@ -1,4 +1,5 @@
 const noNotesSection = document.getElementById("no-notes-section");
+const searchBar = document.getElementById("search-bar-input");
 const addNoteButtons = document.getElementsByName("add-note-button");
 const addNextNoteButton = document.getElementById("add-next-note-button");
 const editNoteForm = document.getElementById("edit-note-form");
@@ -15,6 +16,14 @@ const notesData = [];
 
 let editedNote = null;
 let removedNoteId = null;
+
+const searchNotes = (event) => {
+  const searchPhrase = event.target.value;
+  console.log(notesData.filter((note) => note.title.includes(searchPhrase)));
+  updateNotesView(
+    notesData.filter((note) => note.title.includes(searchPhrase))
+  );
+};
 
 const toggleNoteMenu = (_, note) => {
   const isOpeningMenu = editNoteForm.style.display !== "flex";
@@ -43,10 +52,10 @@ const toggleNoteMenu = (_, note) => {
   editNoteForm.style.display = isOpeningMenu ? "flex" : "none";
 };
 
-const updateNotesView = () => {
+const updateNotesView = (notesList) => {
   notes.innerHTML = "";
 
-  notesData.forEach((note) => {
+  notesList.forEach((note) => {
     const noteListElement = document.createElement("li");
     noteListElement.className = "note";
 
@@ -110,7 +119,7 @@ const updateNote = (event) => {
     notesData.push(formValues);
   }
 
-  updateNotesView();
+  updateNotesView(notesData);
   toggleNoteMenu();
 };
 
@@ -134,9 +143,10 @@ const removeNote = () => {
 
   removedNoteId = null;
   dialog.close();
-  updateNotesView();
+  updateNotesView(notesData);
 };
 
+searchBar.addEventListener("change", searchNotes);
 addNoteButtons.forEach((button) =>
   button.addEventListener("click", toggleNoteMenu)
 );
