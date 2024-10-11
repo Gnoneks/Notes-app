@@ -3,6 +3,7 @@ const editNoteForm = document.getElementById("edit-note-form");
 const editNoteTitle = document.getElementById("edit-note-title");
 const editNoteDetails = document.getElementById("edit-note-details");
 const editNoteCancel = document.getElementById("edit-note-cancel");
+const editNoteMenuLabel = document.getElementById("edit-note-menu-label");
 const notes = document.getElementById("notes");
 
 const notesData = [];
@@ -13,8 +14,11 @@ const toggleNoteMenu = (_, note) => {
 
   if (isOpeningMenu) {
     if (note) {
+      editNoteMenuLabel.textContent = "Edit note";
       editedNote = note;
       updateNoteForm(note);
+    } else {
+      editNoteMenuLabel.textContent = "Add new note";
     }
   } else {
     editedNote = null;
