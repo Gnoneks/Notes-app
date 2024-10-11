@@ -100,8 +100,8 @@ textarea {
 }
 
 .add-new-note {
+  display: none;
   padding: 20px 16px;
-  display: flex;
   flex-direction: column;
   justify-content: flex-end;
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.08);
