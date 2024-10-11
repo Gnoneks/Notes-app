@@ -18,10 +18,10 @@ let editedNote = null;
 let removedNoteId = null;
 
 const searchNotes = (event) => {
-  const searchPhrase = event.target.value;
-  console.log(notesData.filter((note) => note.title.includes(searchPhrase)));
+  const searchPhrase = event.target.value.toLowerCase().trim();
+
   updateNotesView(
-    notesData.filter((note) => note.title.includes(searchPhrase))
+    notesData.filter((note) => note.title.toLowerCase().includes(searchPhrase))
   );
 };
 
@@ -146,7 +146,7 @@ const removeNote = () => {
   updateNotesView(notesData);
 };
 
-searchBar.addEventListener("change", searchNotes);
+searchBar.addEventListener("input", searchNotes);
 addNoteButtons.forEach((button) =>
   button.addEventListener("click", toggleNoteMenu)
 );
