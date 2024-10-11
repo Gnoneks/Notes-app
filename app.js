@@ -1,5 +1,5 @@
 const noNotesSection = document.getElementById("no-notes-section");
-const searchBar = document.getElementById("search-bar-input");
+const searchBar = document.getElementById("search-bar");
 const addNoteButtons = document.getElementsByName("add-note-button");
 const addNextNoteButton = document.getElementById("add-next-note-button");
 const editNoteForm = document.getElementById("edit-note-form");

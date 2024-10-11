@@ -10,6 +10,7 @@ body {
 main {
   display: flex;
   flex-direction: column;
+  margin: auto;
   gap: 24px;
 }
 
@@ -93,7 +94,7 @@ textarea {
   gap: 12px;
 }
 
-.search-bar-input {
+.search-bar {
   padding-left: 38px;
   margin: 0 16px;
   background: #eeeff0 url(icons/search-glass.svg) no-repeat scroll 7px 7px;
@@ -165,6 +166,7 @@ textarea {
     &:hover {
       font-weight: 500;
       text-decoration: underline;
+      background-color: transparent;
     }
   }
 
@@ -258,5 +260,39 @@ textarea {
   .dialog-buttons {
     display: flex;
     justify-content: space-between;
+  }
+}
+
+@media (min-width: 768px) {
+  main {
+    max-width: 760px;
+  }
+
+  .header {
+    padding: 16px 0 0;
+  }
+
+  .search-bar,
+  .add-next-note-button {
+    margin: 0;
+  }
+
+  .no-notes {
+    max-width: unset;
+  }
+
+  .edit-note {
+    border: none;
+    border-radius: 12px;
+  }
+
+  .notes {
+    padding: 0;
+  }
+}
+
+@media (min-width: 992px) {
+  main {
+    max-width: 960px;
   }
 }
