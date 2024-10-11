@@ -17,10 +17,7 @@
       <img src="icons/note.svg" alt="Folded paper" width="30" height="30" />
       <h1 class="header-title">Notes</h1>
     </header>
-    <div class="search-bar">
-      <img src="icons/search-glass.svg" alt="Search glass" width="24" height="24" />
-      <input type="text" placeholder="Search notes...">
-    </div>
+    <input class="search-bar" id="search-bar" type="text" placeholder="Search notes..." />
     <section class="no-notes" id="no-notes-section">
       <img src="icons/info.svg" alt="I letter in black circle" width="60" height="60" />
       <p class="no-notes-title">No notes yet</p>
@@ -36,8 +33,8 @@
         <p class="edit-note-title" id="edit-note-menu-label">Add new note</p>
         <button class="edit-note-cancel" id="edit-note-cancel" type="button">Cancel</button>
       </div>
-      <input class="edit-note-input" id="edit-note-title" type="text" placeholder="Note title" name="title">
-      <textarea class="edit-note-input" id="edit-note-details" placeholder="Your note" rows="8" name="details"></textarea>
+      <input id="edit-note-title" type="text" placeholder="Note title" name="title" />
+      <textarea id="edit-note-details" placeholder="Your note" rows="8" name="details"></textarea>
       <button class="edit-note-save button-purple" type="submit">Save</button>
     </form>
     <ul class="notes" id="notes"></ul>
