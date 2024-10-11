@@ -37,12 +37,29 @@ button {
   line-height: 150%;
   gap: 10px;
   cursor: pointer;
+
+  &:hover {
+    background-color: #e7e7e7;
+  }
+
+  &:active {
+    background: #bdbdbd;
+    border: 1px solid #bdbdbd;
+  }
 }
 
 .button-purple {
   background: #6b3c9b;
   border: none;
   color: #ffffff;
+
+  &:hover {
+    background-color: #844dba;
+  }
+
+  &:active {
+    background: #5b2f87;
+  }
 }
 
 input,
@@ -58,7 +75,12 @@ textarea {
   resize: none;
 
   &:focus {
-    outline: none;
+    background-color: #fff;
+    outline: 1px solid black;
+  }
+
+  &:hover {
+    background: #dcdee0;
   }
 }
 
@@ -71,14 +93,19 @@ textarea {
   gap: 12px;
 }
 
-.search-bar {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+.search-bar-input {
+  padding-left: 38px;
   margin: 0 16px;
-  padding: 0 12px;
-  background-color: #eeeff0;
-  border-radius: 12px;
+  background: #eeeff0 url(icons/search-glass.svg) no-repeat scroll 7px 7px;
+
+  &:focus {
+    background-color: #fff url(icons/search-glass.svg) no-repeat scroll 7px 7px;
+    outline: 1px solid black;
+  }
+
+  &:hover {
+    background: #dcdee0 url(icons/search-glass.svg) no-repeat scroll 7px 7px;
+  }
 }
 
 .no-notes {
@@ -134,18 +161,16 @@ textarea {
     font-size: 14px;
     line-height: 170%;
     color: #0f75b8;
+
+    &:hover {
+      font-weight: 500;
+      text-decoration: underline;
+    }
   }
 
   .edit-note-header {
     display: flex;
     justify-content: space-between;
-  }
-
-  .edit-note-input {
-    &:focus {
-      background-color: #fff;
-      outline: 1px solid black;
-    }
   }
 
   .edit-note-save {
