@@ -30,14 +30,14 @@
         <p>Add Note</p>
       </button>
     </section>
-    <form class="add-new-note" id="add-new-note-form">
-      <div class="add-new-note-header">
-        <p class="add-new-note-title">Add new note</p>
-        <button class="add-new-note-cancel" id="add-new-note-cancel">Cancel</button>
+    <form class="edit-note" id="edit-note-form">
+      <div class="edit-note-header">
+        <p class="edit-note-title">Add new note</p>
+        <button class="edit-note-cancel" id="edit-note-cancel" type="button">Cancel</button>
       </div>
-      <input class="add-new-note-input" type="text" placeholder="Note title" name="title">
-      <textarea class="add-new-note-input" placeholder="Your note" rows="8" name="details"></textarea>
-      <button class="add-new-note-save button-purple" type="submit">Save</button>
+      <input class="edit-note-input" id="edit-note-title" type="text" placeholder="Note title" name="title">
+      <textarea class="edit-note-input" id="edit-note-details" placeholder="Your note" rows="8" name="details"></textarea>
+      <button class="edit-note-save button-purple" type="submit">Save</button>
     </form>
     <ul class="notes" id="notes"></ul>
   </main>

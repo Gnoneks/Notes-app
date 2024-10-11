@@ -99,7 +99,7 @@ textarea {
   }
 }
 
-.add-new-note {
+.edit-note {
   display: none;
   flex-direction: column;
   justify-content: flex-end;
@@ -109,13 +109,13 @@ textarea {
   border-width: 1px 0px;
   gap: 16px;
 
-  .add-new-note-title {
+  .edit-note-title {
     font-weight: 500;
     font-size: 16px;
     line-height: 160%;
   }
 
-  .add-new-note-cancel {
+  .edit-note-cancel {
     padding: 0;
     border: none;
     font-size: 14px;
@@ -123,19 +123,19 @@ textarea {
     color: #0f75b8;
   }
 
-  .add-new-note-header {
+  .edit-note-header {
     display: flex;
     justify-content: space-between;
   }
 
-  .add-new-note-input {
+  .edit-note-input {
     &:focus {
       background-color: #fff;
       outline: 1px solid black;
     }
   }
 
-  .add-new-note-save {
+  .edit-note-save {
     align-self: flex-end;
   }
 }
@@ -147,7 +147,7 @@ textarea {
   padding: 16px;
   gap: 16px;
 
-  .notes-note {
+  .note {
     display: flex;
     flex-direction: column;
     align-self: stretch;
@@ -157,36 +157,36 @@ textarea {
     border-radius: 12px;
   }
 
-  .notes-note-header {
+  .note-header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
   }
 
-  .notes-note-title {
+  .note-title {
     font-weight: 500;
     font-size: 14px;
     line-height: 170%;
   }
 
-  .notes-note-buttons {
+  .note-buttons {
     display: flex;
     flex-direction: row;
     gap: 8px;
 
-    .notes-note-button {
+    .note-button {
       padding: 0;
       border: none;
     }
   }
 
-  .notes-note-details {
+  .note-details {
     font-size: 14px;
     line-height: 170%;
     color: #3b3c3e;
   }
 
-  .notes-note-date {
+  .note-date {
     font-size: 12px;
     line-height: 130%;
     color: #5b5c5e;
