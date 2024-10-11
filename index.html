@@ -14,25 +14,34 @@
 <body>
   <main>
     <header class="header">
-      <!-- TODO width height -->
-      <img src="icons/note.svg" alt="Folded paper" width="30" height="30"/>
+      <img src="icons/note.svg" alt="Folded paper" width="30" height="30" />
       <h1 class="header-title">Notes</h1>
     </header>
     <div class="search-bar">
-      <img src="icons/search-glass.svg" alt="Search glass" width="24" height="24"/>
-      <input class="search-bar-input" type="text" name="" id="" placeholder="Search notes...">
+      <img src="icons/search-glass.svg" alt="Search glass" width="24" height="24" />
+      <input type="text" name="" id="" placeholder="Search notes...">
     </div>
-    <section class="no-notes-section">
-      <img src="icons/info.svg" alt="I letter in black circle" width="60" height="60"/>
+    <section class="no-notes">
+      <img src="icons/info.svg" alt="I letter in black circle" width="60" height="60" />
       <p class="no-notes-title">No notes yet</p>
       <p class="no-notes-text">Add a note to keep track of your learnings.</p>
-      <button class="no-notes-button" type="button">
-        <img src="icons/add-note.svg" alt="Folded paper with plus sign" width="24" height="24"/>
+      <button id="no-notes-button" type="button">
+        <img src="icons/add-note.svg" alt="Folded paper with plus sign" width="24" height="24" />
         <p>Add Note</p>
       </button>
     </section>
+    <section class="add-new-note">
+      <div class="add-new-note-header">
+        <p class="add-new-note-title">Add new note</p>
+        <button class="add-new-note-cancel">Cancel</button>
+      </div>
+      <input class="add-new-note-input" type="text" name="" id="" placeholder="Note title">
+      <textarea class="add-new-note-input" placeholder="Your note" rows="8" res></textarea>
+      <button class="add-new-note-save button-purple">Save</button>
+    </section>
     <section class="notes"></section>
   </main>
+  <script src="app.js"></script>
 </body>
 
 </html>
