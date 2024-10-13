@@ -238,30 +238,30 @@ textarea {
   }
 }
 
-.dialog {
+.remove-note-dialog {
   border: none;
   border-radius: 16px;
   box-shadow: 0px 6px 4px rgba(0, 0, 0, 0.15);
 
-  .dialog-content {
+  .remove-note-dialog-content {
     display: flex;
     flex-direction: column;
     padding: 8px;
     gap: 24px;
   }
 
-  .dialog-title {
+  .remove-note-dialog-title {
     font-weight: 500;
     font-size: 20px;
     line-height: 150%;
   }
 
-  .dialog-text {
+  .remove-note-dialog-text {
     font-size: 16px;
     line-height: 160%;
   }
 
-  .dialog-buttons {
+  .remove-note-dialog-buttons {
     display: flex;
     justify-content: space-between;
   }

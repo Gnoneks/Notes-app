@@ -8,29 +8,76 @@ const editNoteDetails = document.getElementById("edit-note-details");
 const editNoteCancel = document.getElementById("edit-note-cancel");
 const editNoteMenuLabel = document.getElementById("edit-note-menu-label");
 const notes = document.getElementById("notes");
-const dialog = document.getElementById("dialog");
-const dialogCloseButton = document.getElementById("dialog-close");
-const dialogConfirm = document.getElementById("dialog-confirm");
+const removeNoteDialog = document.getElementById("remove-note-dialog");
+const removeNoteDialogClose = document.getElementById(
+  "remove-note-dialog-close"
+);
+const removeNoteDialogConfirm = document.getElementById(
+  "remove-note-dialog-confirm"
+);
 
 const notesData = [];
-
 let editedNote = null;
 let removedNoteId = null;
 
 const searchNotes = (event) => {
   const searchPhrase = event.target.value.toLowerCase().trim();
-
-  updateNotesView(
-    notesData.filter((note) => note.title.toLowerCase().includes(searchPhrase))
+  const filteredNotes = notesData.filter(({ title }) =>
+    title.toLowerCase().includes(searchPhrase)
   );
+
+  updateNotesView(filteredNotes);
+};
+
+const updateNote = (event) => {
+  event.preventDefault();
+
+  const formValues = Object.fromEntries(new FormData(event.target));
+  formValues.title = formValues.title.trim();
+  formValues.details = formValues.details.trim();
+  formValues.date = new Date();
+
+  if (editedNote) {
+    const editedNoteIdx = notesData.findIndex(
+      ({ id }) => id.toString() === editedNote.id.toString()
+    );
+    formValues.id = editedNote.id;
+
+    notesData[editedNoteIdx] = formValues;
+    editedNote = null;
+  } else {
+    formValues.id = Math.floor(Math.random() * 1000000000);
+
+    notesData.push(formValues);
+  }
+
+  updateNotesView(notesData);
+  toggleNoteMenu();
+};
+
+const removeNote = () => {
+  const noteIdx = notesData.findIndex(
+    ({ id }) => id.toString() === removedNoteId.toString()
+  );
+
+  notesData.splice(noteIdx, 1);
+
+  if (!notesData.length) {
+    showElement(noNotesSection);
+    hideElement(addNextNoteButton);
+  }
+
+  removedNoteId = null;
+  removeNoteDialog.close();
+  updateNotesView(notesData);
 };
 
 const toggleNoteMenu = (_, note) => {
   const isOpeningMenu = editNoteForm.style.display !== "flex";
 
   if (isOpeningMenu) {
-    noNotesSection.style.display = "none";
-    addNextNoteButton.style.display = "none";
+    hideElement(noNotesSection);
+    hideElement(addNextNoteButton);
     editNoteMenuLabel.textContent = "Add new note";
 
     if (note) {
@@ -38,18 +85,24 @@ const toggleNoteMenu = (_, note) => {
       editedNote = note;
       updateNoteForm(note);
     }
+
+    showElement(editNoteForm);
   } else {
     if (notesData.length) {
-      addNextNoteButton.style.display = "flex";
+      showElement(addNextNoteButton);
     } else {
-      noNotesSection.style.display = "flex";
+      showElement(noNotesSection);
     }
 
     editedNote = null;
     updateNoteForm({ title: "", details: "" });
+    hideElement(editNoteForm);
   }
+};
 
-  editNoteForm.style.display = isOpeningMenu ? "flex" : "none";
+const updateNoteForm = (note) => {
+  editNoteTitle.value = note.title;
+  editNoteDetails.value = note.details;
 };
 
 const updateNotesView = (notesList) => {
@@ -87,63 +140,21 @@ const updateNotesView = (notesList) => {
 
     const removeButton = noteListElement.querySelector("[name='remove-note']");
     removeButton.addEventListener("click", function () {
-      openRemoveDialog(note.id);
+      removedNoteId = note.id;
+
+      removeNoteDialog.showModal();
     });
 
     notes.appendChild(noteListElement);
   });
 };
 
-const updateNoteForm = (note) => {
-  editNoteTitle.value = note.title;
-  editNoteDetails.value = note.details;
+const showElement = (element) => {
+  element.style.display = "flex";
 };
 
-const updateNote = (event) => {
-  event.preventDefault();
-
-  const formValues = Object.fromEntries(new FormData(event.target));
-  formValues.date = new Date();
-
-  if (editedNote) {
-    const editedNoteIdx = notesData.findIndex(
-      ({ id }) => id.toString() === editedNote.id.toString()
-    );
-    formValues.id = editedNote.id;
-
-    notesData[editedNoteIdx] = formValues;
-    editedNote = null;
-  } else {
-    formValues.id = Math.floor(Math.random() * 1000000000);
-
-    notesData.push(formValues);
-  }
-
-  updateNotesView(notesData);
-  toggleNoteMenu();
-};
-
-const openRemoveDialog = (noteId) => {
-  removedNoteId = noteId;
-
-  dialog.showModal();
-};
-
-const removeNote = () => {
-  const noteIdx = notesData.findIndex(
-    ({ id }) => id.toString() === removedNoteId.toString()
-  );
-
-  notesData.splice(noteIdx, 1);
-
-  if (!notesData.length) {
-    noNotesSection.style.display = "flex";
-    addNextNoteButton.style.display = "none";
-  }
-
-  removedNoteId = null;
-  dialog.close();
-  updateNotesView(notesData);
+const hideElement = (element) => {
+  element.style.display = "none";
 };
 
 searchBar.addEventListener("input", searchNotes);
@@ -152,7 +163,7 @@ addNoteButtons.forEach((button) =>
 );
 editNoteCancel.addEventListener("click", toggleNoteMenu);
 editNoteForm.addEventListener("submit", updateNote);
-dialogCloseButton.addEventListener("click", function () {
-  dialog.close();
+removeNoteDialogClose.addEventListener("click", function () {
+  removeNoteDialog.close();
 });
-dialogConfirm.addEventListener("click", removeNote);
+removeNoteDialogConfirm.addEventListener("click", removeNote);
