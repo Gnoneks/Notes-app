@@ -66,6 +66,10 @@ const removeNote = () => {
     hideElement(addNextNoteButton);
   }
 
+  if (editedNote.id === removedNoteId) {
+    toggleNoteMenu();
+  }
+
   removedNoteId = null;
   removeNoteDialog.close();
   searchBar.value = "";
