@@ -26,7 +26,7 @@ const searchNotes = (event) => {
     title.toLowerCase().includes(searchPhrase)
   );
 
-  updateNotesView(filteredNotes);
+  refreshNotes(filteredNotes);
 };
 
 const updateNote = (event) => {
@@ -38,12 +38,8 @@ const updateNote = (event) => {
   formValues.date = new Date();
 
   if (editedNote) {
-    const editedNoteIdx = notesData.findIndex(
-      ({ id }) => id.toString() === editedNote.id.toString()
-    );
     formValues.id = editedNote.id;
-
-    notesData[editedNoteIdx] = formValues;
+    notesData[findNoteIdx(editedNote.id)] = formValues;
     editedNote = null;
   } else {
     formValues.id = Math.floor(Math.random() * 1000000000);
@@ -51,16 +47,12 @@ const updateNote = (event) => {
     notesData.push(formValues);
   }
 
-  updateNotesView(notesData);
+  refreshNotes(notesData);
   toggleNoteMenu();
 };
 
 const removeNote = () => {
-  const noteIdx = notesData.findIndex(
-    ({ id }) => id.toString() === removedNoteId.toString()
-  );
-
-  notesData.splice(noteIdx, 1);
+  notesData.splice(findNoteIdx(removedNoteId), 1);
 
   if (!notesData.length) {
     showElement(noNotesSection);
@@ -69,7 +61,12 @@ const removeNote = () => {
 
   removedNoteId = null;
   removeNoteDialog.close();
-  updateNotesView(notesData);
+  refreshNotes(notesData);
+};
+
+const cancelRemoval = () => {
+  removedNoteId = null;
+  removeNoteDialog.close();
 };
 
 const toggleNoteMenu = (_, note) => {
@@ -100,24 +97,24 @@ const toggleNoteMenu = (_, note) => {
   }
 };
 
-const updateNoteForm = (note) => {
-  editNoteTitle.value = note.title;
-  editNoteDetails.value = note.details;
+const updateNoteForm = ({ title, details }) => {
+  editNoteTitle.value = title;
+  editNoteDetails.value = details;
 };
 
-const updateNotesView = (notesList) => {
+const refreshNotes = (notesList) => {
   notes.innerHTML = "";
 
   notesList.forEach((note) => {
+    const { date, title, details, id } = note;
+    const month = date.toLocaleString("default", { month: "long" });
+    const day = date.getDate();
     const noteListElement = document.createElement("li");
     noteListElement.className = "note";
 
-    const month = note.date.toLocaleString("default", { month: "long" });
-    const day = note.date.getDate();
-
     const noteContent = `
         <div class="note-header">
-            <p class="note-title">${note.title}</p>
+            <p class="note-title">${title}</p>
             <div class="note-buttons">
                 <button class="note-button" name="edit-note">
                     <img src="icons/edit.svg" alt="Edit note - Three lines with pencil" width="20" height="20" />
@@ -127,7 +124,7 @@ const updateNotesView = (notesList) => {
                 </button>
             </div>
         </div>
-        <p class="note-details">${note.details}</p>
+        <p class="note-details">${details}</p>
         <p class="note-date">${month} ${day}</p>
         `;
 
@@ -140,8 +137,7 @@ const updateNotesView = (notesList) => {
 
     const removeButton = noteListElement.querySelector("[name='remove-note']");
     removeButton.addEventListener("click", function () {
-      removedNoteId = note.id;
-
+      removedNoteId = id;
       removeNoteDialog.showModal();
     });
 
@@ -157,13 +153,13 @@ const hideElement = (element) => {
   element.style.display = "none";
 };
 
+const findNoteIdx = (noteId) => {
+  return notesData.findIndex(({ id }) => id.toString() === noteId.toString());
+};
+
 searchBar.addEventListener("input", searchNotes);
-addNoteButtons.forEach((button) =>
-  button.addEventListener("click", toggleNoteMenu)
-);
+addNoteButtons.forEach((b) => b.addEventListener("click", toggleNoteMenu));
 editNoteCancel.addEventListener("click", toggleNoteMenu);
 editNoteForm.addEventListener("submit", updateNote);
-removeNoteDialogClose.addEventListener("click", function () {
-  removeNoteDialog.close();
-});
 removeNoteDialogConfirm.addEventListener("click", removeNote);
+removeNoteDialogClose.addEventListener("click", cancelRemoval);

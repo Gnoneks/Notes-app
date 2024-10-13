@@ -152,7 +152,7 @@ textarea {
   border-width: 1px 0px;
   gap: 16px;
 
-  .edit-note-title {
+  .edit-note-menu-label {
     font-weight: 500;
     font-size: 16px;
     line-height: 160%;
