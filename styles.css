@@ -177,6 +177,18 @@ textarea {
     justify-content: space-between;
   }
 
+  .edit-note-title {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .edit-note-title-error {
+    display: none;
+    margin: 0;
+    font-size: 12px;
+    color: var(--error);
+  }
+
   .edit-note-save {
     align-self: flex-end;
   }
