@@ -34,7 +34,10 @@
         <p class="edit-note-menu-label" id="edit-note-menu-label">Add new note</p>
         <button class="edit-note-cancel" id="edit-note-cancel" type="button">Cancel</button>
       </div>
-      <input id="edit-note-title" type="text" placeholder="Note title" name="title" />
+      <div class="edit-note-title">
+        <input id="edit-note-title" type="text" placeholder="Note title" name="title" />
+        <p id="edit-note-title-error" class="edit-note-title-error">Title cannot be empty!</p>
+      </div>
       <textarea id="edit-note-details" placeholder="Your note" rows="8" name="details"></textarea>
       <button class="edit-note-save button-purple" type="submit">Save</button>
     </form>
