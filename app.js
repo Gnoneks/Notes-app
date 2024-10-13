@@ -8,29 +8,75 @@ const editNoteDetails = document.getElementById("edit-note-details");
 const editNoteCancel = document.getElementById("edit-note-cancel");
 const editNoteMenuLabel = document.getElementById("edit-note-menu-label");
 const notes = document.getElementById("notes");
-const dialog = document.getElementById("dialog");
-const dialogCloseButton = document.getElementById("dialog-close");
-const dialogConfirm = document.getElementById("dialog-confirm");
+const removeNoteDialog = document.getElementById("remove-note-dialog");
+const removeNoteDialogClose = document.getElementById(
+  "remove-note-dialog-close"
+);
+const removeNoteDialogConfirm = document.getElementById(
+  "remove-note-dialog-confirm"
+);
 
 const notesData = [];
-
 let editedNote = null;
 let removedNoteId = null;
 
 const searchNotes = (event) => {
   const searchPhrase = event.target.value.toLowerCase().trim();
-
-  updateNotesView(
-    notesData.filter((note) => note.title.toLowerCase().includes(searchPhrase))
+  const filteredNotes = notesData.filter(({ title }) =>
+    title.toLowerCase().includes(searchPhrase)
   );
+
+  refreshNotes(filteredNotes);
+};
+
+const updateNote = (event) => {
+  event.preventDefault();
+
+  const formValues = Object.fromEntries(new FormData(event.target));
+  formValues.title = formValues.title.trim();
+  formValues.details = formValues.details.trim();
+  formValues.date = new Date();
+
+  if (editedNote) {
+    formValues.id = editedNote.id;
+    notesData[findNoteIdx(editedNote.id)] = formValues;
+    editedNote = null;
+  } else {
+    formValues.id = Math.floor(Math.random() * 1000000000);
+
+    notesData.push(formValues);
+  }
+
+  searchBar.value = "";
+  refreshNotes(notesData);
+  toggleNoteMenu();
+};
+
+const removeNote = () => {
+  notesData.splice(findNoteIdx(removedNoteId), 1);
+
+  if (!notesData.length) {
+    showElement(noNotesSection);
+    hideElement(addNextNoteButton);
+  }
+
+  removedNoteId = null;
+  removeNoteDialog.close();
+  searchBar.value = "";
+  refreshNotes(notesData);
+};
+
+const cancelRemoval = () => {
+  removedNoteId = null;
+  removeNoteDialog.close();
 };
 
 const toggleNoteMenu = (_, note) => {
   const isOpeningMenu = editNoteForm.style.display !== "flex";
 
   if (isOpeningMenu) {
-    noNotesSection.style.display = "none";
-    addNextNoteButton.style.display = "none";
+    hideElement(noNotesSection);
+    hideElement(addNextNoteButton);
     editNoteMenuLabel.textContent = "Add new note";
 
     if (note) {
@@ -38,33 +84,39 @@ const toggleNoteMenu = (_, note) => {
       editedNote = note;
       updateNoteForm(note);
     }
+
+    showElement(editNoteForm);
   } else {
     if (notesData.length) {
-      addNextNoteButton.style.display = "flex";
+      showElement(addNextNoteButton);
     } else {
-      noNotesSection.style.display = "flex";
+      showElement(noNotesSection);
     }
 
     editedNote = null;
     updateNoteForm({ title: "", details: "" });
+    hideElement(editNoteForm);
   }
-
-  editNoteForm.style.display = isOpeningMenu ? "flex" : "none";
 };
 
-const updateNotesView = (notesList) => {
+const updateNoteForm = ({ title, details }) => {
+  editNoteTitle.value = title;
+  editNoteDetails.value = details;
+};
+
+const refreshNotes = (notesList) => {
   notes.innerHTML = "";
 
   notesList.forEach((note) => {
+    const { date, title, details, id } = note;
+    const month = date.toLocaleString("default", { month: "long" });
+    const day = date.getDate();
     const noteListElement = document.createElement("li");
     noteListElement.className = "note";
 
-    const month = note.date.toLocaleString("default", { month: "long" });
-    const day = note.date.getDate();
-
     const noteContent = `
         <div class="note-header">
-            <p class="note-title">${note.title}</p>
+            <p class="note-title">${title}</p>
             <div class="note-buttons">
                 <button class="note-button" name="edit-note">
                     <img src="icons/edit.svg" alt="Edit note - Three lines with pencil" width="20" height="20" />
@@ -74,7 +126,7 @@ const updateNotesView = (notesList) => {
                 </button>
             </div>
         </div>
-        <p class="note-details">${note.details}</p>
+        <p class="note-details">${details}</p>
         <p class="note-date">${month} ${day}</p>
         `;
 
@@ -87,72 +139,29 @@ const updateNotesView = (notesList) => {
 
     const removeButton = noteListElement.querySelector("[name='remove-note']");
     removeButton.addEventListener("click", function () {
-      openRemoveDialog(note.id);
+      removedNoteId = id;
+      removeNoteDialog.showModal();
     });
 
     notes.appendChild(noteListElement);
   });
 };
 
-const updateNoteForm = (note) => {
-  editNoteTitle.value = note.title;
-  editNoteDetails.value = note.details;
+const showElement = (element) => {
+  element.style.display = "flex";
 };
 
-const updateNote = (event) => {
-  event.preventDefault();
-
-  const formValues = Object.fromEntries(new FormData(event.target));
-  formValues.date = new Date();
-
-  if (editedNote) {
-    const editedNoteIdx = notesData.findIndex(
-      ({ id }) => id.toString() === editedNote.id.toString()
-    );
-    formValues.id = editedNote.id;
-
-    notesData[editedNoteIdx] = formValues;
-    editedNote = null;
-  } else {
-    formValues.id = Math.floor(Math.random() * 1000000000);
-
-    notesData.push(formValues);
-  }
-
-  updateNotesView(notesData);
-  toggleNoteMenu();
+const hideElement = (element) => {
+  element.style.display = "none";
 };
 
-const openRemoveDialog = (noteId) => {
-  removedNoteId = noteId;
-
-  dialog.showModal();
-};
-
-const removeNote = () => {
-  const noteIdx = notesData.findIndex(
-    ({ id }) => id.toString() === removedNoteId.toString()
-  );
-
-  notesData.splice(noteIdx, 1);
-
-  if (!notesData.length) {
-    noNotesSection.style.display = "flex";
-    addNextNoteButton.style.display = "none";
-  }
-
-  removedNoteId = null;
-  dialog.close();
-  updateNotesView(notesData);
+const findNoteIdx = (noteId) => {
+  return notesData.findIndex(({ id }) => id.toString() === noteId.toString());
 };
 
 searchBar.addEventListener("input", searchNotes);
-addNoteButtons.forEach((button) =>
-  button.addEventListener("click", toggleNoteMenu)
-);
+addNoteButtons.forEach((b) => b.addEventListener("click", toggleNoteMenu));
 editNoteCancel.addEventListener("click", toggleNoteMenu);
 editNoteForm.addEventListener("submit", updateNote);
-dialogCloseButton.addEventListener("click", function () {
-  dialog.close();
-});
-dialogConfirm.addEventListener("click", removeNote);
+removeNoteDialogConfirm.addEventListener("click", removeNote);
+removeNoteDialogClose.addEventListener("click", cancelRemoval);

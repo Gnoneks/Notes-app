@@ -4,7 +4,7 @@
 
 body {
   margin: 0;
-  color: #1b1c1e;
+  color: var(--text-dark);
 }
 
 main {
@@ -30,7 +30,7 @@ button {
   align-items: center;
   justify-content: center;
   padding: 8px 16px;
-  border: 1px solid #bcbcbd;
+  border: 1px solid var(--border-grey);
   border-radius: 12px;
   background-color: transparent;
   font-weight: 500;
@@ -40,35 +40,35 @@ button {
   cursor: pointer;
 
   &:hover {
-    background-color: #e7e7e7;
+    background-color: var(--hover-light);
   }
 
   &:active {
-    background: #bdbdbd;
-    border: 1px solid #bdbdbd;
+    background: var(--grey);
+    border: 1px solid var(--grey);
   }
 }
 
 .button-purple {
-  background: #6b3c9b;
+  background: var(--purple);
   border: none;
-  color: #ffffff;
+  color: #fff;
 
   &:hover {
-    background-color: #844dba;
+    background-color: var(--light-purple);
   }
 
   &:active {
-    background: #5b2f87;
+    background: var(--dark-purple);
   }
 }
 
 input,
 textarea {
   border: none;
-  background-color: #eeeff0;
+  background-color: var(--background-light);
   padding: 8px 12px;
-  color: #5b5c5e;
+  color: var(--text-light-grey);
   font-weight: 400;
   font-size: 16px;
   line-height: 160%;
@@ -77,11 +77,11 @@ textarea {
 
   &:focus {
     background-color: #fff;
-    outline: 1px solid black;
+    outline: 1px solid #000;
   }
 
   &:hover {
-    background: #dcdee0;
+    background: var(--hover-grey);
   }
 }
 
@@ -97,7 +97,8 @@ textarea {
 .search-bar {
   padding-left: 38px;
   margin: 0 16px;
-  background: #eeeff0 url(icons/search-glass.svg) no-repeat scroll 7px 7px;
+  background: var(--background-light) url(icons/search-glass.svg) no-repeat
+    scroll 7px 7px;
 
   &:focus {
     background-color: #fff url(icons/search-glass.svg) no-repeat scroll 7px 7px;
@@ -105,7 +106,8 @@ textarea {
   }
 
   &:hover {
-    background: #dcdee0 url(icons/search-glass.svg) no-repeat scroll 7px 7px;
+    background: var(--hover-grey) url(icons/search-glass.svg) no-repeat scroll
+      7px 7px;
   }
 }
 
@@ -129,7 +131,7 @@ textarea {
   .no-notes-text {
     font-size: 16px;
     line-height: 160%;
-    color: #3b3c3e;
+    color: var(--text-grey);
   }
 }
 
@@ -146,11 +148,11 @@ textarea {
   justify-content: flex-end;
   padding: 20px 16px;
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.08);
-  border: 1px solid #eeeff0;
+  border: 1px solid var(--background-light);
   border-width: 1px 0px;
   gap: 16px;
 
-  .edit-note-title {
+  .edit-note-menu-label {
     font-weight: 500;
     font-size: 16px;
     line-height: 160%;
@@ -198,9 +200,13 @@ textarea {
     border-radius: 12px;
   }
 
-  .note-header {
+  .note-header,
+  .note-buttons {
     display: flex;
     flex-direction: row;
+  }
+
+  .note-header {
     justify-content: space-between;
   }
 
@@ -211,8 +217,6 @@ textarea {
   }
 
   .note-buttons {
-    display: flex;
-    flex-direction: row;
     gap: 8px;
 
     .note-button {
@@ -224,40 +228,40 @@ textarea {
   .note-details {
     font-size: 14px;
     line-height: 170%;
-    color: #3b3c3e;
+    color: var(--text-grey);
   }
 
   .note-date {
     font-size: 12px;
     line-height: 130%;
-    color: #5b5c5e;
+    color: var(--text-light-grey);
   }
 }
 
-.dialog {
+.remove-note-dialog {
   border: none;
   border-radius: 16px;
   box-shadow: 0px 6px 4px rgba(0, 0, 0, 0.15);
 
-  .dialog-content {
+  .remove-note-dialog-content {
     display: flex;
     flex-direction: column;
     padding: 8px;
     gap: 24px;
   }
 
-  .dialog-title {
+  .remove-note-dialog-title {
     font-weight: 500;
     font-size: 20px;
     line-height: 150%;
   }
 
-  .dialog-text {
+  .remove-note-dialog-text {
     font-size: 16px;
     line-height: 160%;
   }
 
-  .dialog-buttons {
+  .remove-note-dialog-buttons {
     display: flex;
     justify-content: space-between;
   }
