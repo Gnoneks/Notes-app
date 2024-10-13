@@ -47,6 +47,7 @@ const updateNote = (event) => {
     notesData.push(formValues);
   }
 
+  searchBar.value = "";
   refreshNotes(notesData);
   toggleNoteMenu();
 };
@@ -61,6 +62,7 @@ const removeNote = () => {
 
   removedNoteId = null;
   removeNoteDialog.close();
+  searchBar.value = "";
   refreshNotes(notesData);
 };
 
