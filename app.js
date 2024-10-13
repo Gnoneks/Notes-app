@@ -4,6 +4,7 @@ const addNoteButtons = document.getElementsByName("add-note-button");
 const addNextNoteButton = document.getElementById("add-next-note-button");
 const editNoteForm = document.getElementById("edit-note-form");
 const editNoteTitle = document.getElementById("edit-note-title");
+const editNoteTitleError = document.getElementById("edit-note-title-error");
 const editNoteDetails = document.getElementById("edit-note-details");
 const editNoteCancel = document.getElementById("edit-note-cancel");
 const editNoteMenuLabel = document.getElementById("edit-note-menu-label");
@@ -36,6 +37,11 @@ const updateNote = (event) => {
   formValues.title = formValues.title.trim();
   formValues.details = formValues.details.trim();
   formValues.date = new Date();
+
+  if (!formValues.title) {
+    showElement(editNoteTitleError);
+    return;
+  }
 
   if (editedNote) {
     formValues.id = editedNote.id;
@@ -73,8 +79,9 @@ const cancelRemoval = () => {
 
 const toggleNoteMenu = (_, note) => {
   const isOpeningMenu = editNoteForm.style.display !== "flex";
+  hideElement(editNoteTitleError);
 
-  if (isOpeningMenu) {
+  if (isOpeningMenu || note) {
     hideElement(noNotesSection);
     hideElement(addNextNoteButton);
     editNoteMenuLabel.textContent = "Add new note";
