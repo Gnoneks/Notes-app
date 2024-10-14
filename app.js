@@ -65,8 +65,7 @@ const removeNote = () => {
     showElement(noNotesSection);
     hideElement(addNextNoteButton);
   }
-
-  if (editedNote.id === removedNoteId) {
+  if (editedNote?.id === removedNoteId) {
     toggleNoteMenu();
   }
 
